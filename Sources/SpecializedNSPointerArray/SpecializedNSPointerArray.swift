@@ -7,7 +7,19 @@
 import Foundation
 
 public class SpecializedNSPointerArray<T: AnyObject> {
-    let pointerArray = NSPointerArray.weakObjects()
+    public static func weakObjects() -> SpecializedNSPointerArray<T> {
+        .init(pointerArray: .weakObjects())
+    }
+    
+    public static func strongObjects() -> SpecializedNSPointerArray<T> {
+        .init(pointerArray: .strongObjects())
+    }
+    
+    let pointerArray: NSPointerArray
+    
+    private init(pointerArray: NSPointerArray) {
+        self.pointerArray = pointerArray
+    }
     
     public var count: Int {
         pointerArray.removeNils()
@@ -17,8 +29,6 @@ public class SpecializedNSPointerArray<T: AnyObject> {
     public var last: T? {
         pointerArray.last as? T
     }
-    
-    public init() {}
 
     public func append(_ object: T?) {
         pointerArray.append(object)
